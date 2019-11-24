@@ -1,3 +1,4 @@
+import { Items } from './../models/items';
 import { Component, OnInit, Input } from '@angular/core';
 import { Product } from '../models/products';
 import { ShoppingCartService } from '../shopping-cart.service';
@@ -32,7 +33,7 @@ export class ProductCardComponent implements OnInit {
   getQuantity(){
     if (!this.shoppingCart) return 0;
 
-    let item = this.shoppingCart.items[this.product.key];
+    let item: Items = this.shoppingCart.items[this.product.key];
     return item ? item.quantity : 0;
   }
 
