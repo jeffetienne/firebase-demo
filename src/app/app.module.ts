@@ -31,6 +31,7 @@ import { DataTableModule } from 'angular5-data-table';
 import { CategoryDashComponent } from './category-dash/category-dash.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ShoppingCartService } from './shopping-cart.service';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ShoppingCartService } from './shopping-cart.service';
     LoginComponent,
     ProductFormComponent,
     CategoryDashComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,10 @@ import { ShoppingCartService } from './shopping-cart.service';
       { 
         path: '', 
         component: ProductsComponent 
+      }, 
+      { 
+        path: 'chat', 
+        component: ChatComponent 
       }, 
       { 
         path: 'login', 
