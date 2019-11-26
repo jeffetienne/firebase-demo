@@ -13,7 +13,8 @@ export class ChatService {
 
   private create(){
     return this.db.list('/chats').push({
-      dateCreated: new Date().getTime()
+      dateCreated: new Date().getTime(),
+      content: 'Hello World'
     });
   }
 
@@ -37,7 +38,8 @@ export class ChatService {
   }
 
  async addToChat(message: Message){
-  this.updateMessage(message);
+  //this.updateMessage(message);
+  this.create();
  } 
 
   private async updateMessage(message: Message){

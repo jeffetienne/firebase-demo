@@ -1,9 +1,9 @@
 <form #f="ngForm" (ngSubmit)="send(f.value)">
     <div class="form-group">
-        <label for="title">Message</label>
-        <input name="title" id="title" type="text" class="form-control" required>
+        <label for="contenu">Message</label>
+        <input #content="ngModel" name="contenu" [(ngModel)]="contenu" id="contenu" type="text" class="form-control" required>
         <div class="alert alert-danger">
-            Title is required.
+            Content is required.
         </div>
     </div>
     <button class="btn btn-primary">Send</button>
