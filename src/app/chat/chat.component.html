@@ -1,7 +1,14 @@
-<form #f="ngForm" (ngSubmit)="send(f.value)">
+<form #f="ngForm" (ngSubmit)="send()">
     <div class="form-group">
         <label for="contenu">Message</label>
         <input #content="ngModel" name="contenu" [(ngModel)]="contenu" id="contenu" type="text" class="form-control" required>
+        <div class="alert alert-danger">
+            Content is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input #content="ngModel" name="email" [(ngModel)]="email" id="email" type="text" class="form-control" required>
         <div class="alert alert-danger">
             Content is required.
         </div>

@@ -13,24 +13,17 @@ export class ChatComponent implements OnInit {
 
   message: Message;
   appUser: AppUser;
-  receiver: AppUser;
+  email: string;
   contenu: string;
-  constructor(private chatService: ChatService, private auth: AuthService ) { }
+
+  constructor(private chatService: ChatService, private auth: AuthService) { }
 
   private send(){
     
-    this.auth.appUser$.subscribe(appUser => this.appUser = appUser);
-
-    this.receiver = new AppUser();
-    this.receiver.email = 'jeetic9@gmail.com';
-    this.receiver.name = 'Jeff Etienne';
-    this.receiver.isAdmin = false;
-
     this.message = new Message();
-    this.message.content=this.contenu;
-    this.message.sender = this.appUser;
-    this.message.receiver = this.receiver;
-    this.message.dateSent = new Date().getDate();
+    this.message.contenu = this.contenu;
+    this.message.receiver = this.email;
+    
     //this.receiver = {email: 'jeetic9@gmail.com', isAdmin: false, name: 'Jeff Etienne'};
     
 

@@ -1,3 +1,5 @@
+import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 import { Chat } from './models/chats';
 import { AppUser } from './models/app-user';
 import { Message } from './models/messages';
@@ -9,27 +11,39 @@ import { Injectable } from '@angular/core';
 })
 export class ChatService {
 
-  constructor(private db: AngularFireDatabase) { }
+  appUser: AppUser;
+  constructor(private db: AngularFireDatabase, private auth: AuthService) { }
 
-  private create(){
-    return this.db.list('/chats').push({
-      dateCreated: new Date().getTime(),
-      content: 'Hello World'
+  private create(contenu: string, receiver: string){
+    let result;
+    this.auth.appUser$.subscribe(appUser => {
+      result = this.db.list('/chats').push({
+        content: contenu,
+        sender: appUser.email,
+        receiver: receiver,
+        dateSent: new Date().getTime()
+      });
     });
+    return result
   }
 
-  async getChat(){
-    let chatId = await this.getOrCreateChatId();
+  async getChat(contenu: string, receiver: string){
+    let chatId = await this.getOrCreateChatId(contenu, receiver);
     return this.db.object('/chats/' + chatId)
   }
 
-  private async getOrCreateChatId(): Promise<string>{
-    let chatId = localStorage.getItem('chatId');
+  private async getOrCreateChatId(contenu: string, receiver: string){
+    let result;
+    this.auth.appUser$.subscribe(appUser => {
+      let chatId = localStorage.getItem('chatId_' + appUser.email + '_' + receiver);
+      if (chatId) return chatId;
+    result = this.create(contenu, receiver);
+    localStorage.setItem('chatId_' + appUser.email + '_' + receiver, result.key);
     
-    if (chatId) return chatId;
-    let result = await this.create();
-    localStorage.setItem('chatId', result.key);
+    });
+    
     return result.key;
+    
   }
 
   private getItem(chatId: string, messageId: string){
@@ -38,21 +52,42 @@ export class ChatService {
   }
 
  async addToChat(message: Message){
-  //this.updateMessage(message);
-  this.create();
+  this.updateMessage(message);
+  //this.create(contenu, receiver);
  } 
 
   private async updateMessage(message: Message){
-    let chatId = await this.getOrCreateChatId();
-    let item$ = this.getItem(chatId, message.key);
-    if(item$){
-      item$.valueChanges().take(1).subscribe((message: Message) => {
-        item$.set({ message: message});
-      });
-    }
-    this.db.list('/chats').push({
-      message: message,
-      dateCreated: new Date().getTime()
-    });
+    //let chatId = await this.getOrCreateChatId(message.contenu, message.receiver);
+
+    this.auth.appUser$.subscribe(appUser => {
+      let chatId = localStorage.getItem('chatId_' + appUser.email + '_' + message.receiver);
+      console.log('chatId_' + appUser.email + '_' + message.receiver);
+      console.log(chatId);
+      if (!chatId) {
+        console.log('1');
+        let result;
+        result = this.db.list('/chats').push({
+          content: message.contenu,
+          sender: appUser.email,
+          receiver: message.receiver,
+          dateSent: new Date().getTime()
+        });
+        console.log(result.key);
+        localStorage.setItem('chatId_' + appUser.email + '_' + message.receiver, result.key);
+        chatId = result.key;
+        let item$ = this.getItem(chatId, message.key);
+        if (item$) {
+          item$.valueChanges().take(1).subscribe((message: Message) => {
+            item$.set({ message: message });
+          });
+        }
+      }
+      //result = this.create(message.contenu, message.receiver);
+      
+    
+      
+
+      
+    }); 
   }
 }
