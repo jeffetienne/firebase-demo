@@ -20,7 +20,7 @@ export class ShoppingCartService {
 
   async getCart(){
     let cartId = await this.getOrCreateCartId();
-    return this.db.object('/shopping-carts/' + cartId)
+    return this.db.object('/shopping-carts/' + cartId);
   }
 
   private async getOrCreateCartId(): Promise<string>{
