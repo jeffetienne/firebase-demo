@@ -13,8 +13,15 @@
             <tr *ngFor="let productId of productIds">
                 <td>{{ cart.items[productId].product.title }}</td>
                 <td>{{ cart.items[productId].quantity }}</td>
-                <td>{{ cart.items[productId].totalPrice }}</td>
+                <td>{{ cart.items[productId].quantity * cart.items[productId].product.price }}</td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>{{ totalPrice }}</th>
+            </tr>
+        </tfoot>
     </table>
 </ng-container>
