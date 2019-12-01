@@ -1,9 +1,10 @@
 <h1>Shopping Cart</h1>
-<ng-container *ngIf="cart$ | async as cart">
+<ng-container *ngIf="cart$ | async as cart; else noElement">
     <p>You have {{ shoppingCartItemCount }} items in your shopping cart</p>
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Price</th>
@@ -11,6 +12,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let productId of productIds">
+                <td><div [style.backgroundImage]="cart.items[productId].product.imageUrl" class="thumbnail"></div></td>
                 <td>{{ cart.items[productId].product.title }}</td>
                 <td>{{ cart.items[productId].quantity }}</td>
                 <td>{{ cart.items[productId].quantity * cart.items[productId].product.price }}</td>
@@ -20,8 +22,13 @@
             <tr>
                 <th></th>
                 <th></th>
+                <th></th>
                 <th>{{ totalPrice }}</th>
             </tr>
         </tfoot>
     </table>
+    <a class="btn btn-primary" [routerLink]="['/check-out/', cartId]">Check out</a>
+</ng-container>
+<ng-container #noElement>
+    <p>You have no items in your shopping cart</p>
 </ng-container>

@@ -12,22 +12,22 @@ import { Product } from 'src/app/models/products';
 })
 export class ProductFormComponent implements OnInit {
   categories$;
-  product: Product;
+  product={};
   id;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    categoryService: CategoryService, 
-    private productService: ProductService) { 
+    categoryService: CategoryService,
+    private productService: ProductService) {
     this.categories$ = categoryService.getCategories();
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) this.productService
-    .getProduct(this.id)
-    .valueChanges().take(1)
-    .subscribe((p: Product) => {
-      this.product = p;
-    })
+      .getProduct(this.id)
+      .valueChanges().take(1)
+      .subscribe((p: Product) => {
+        this.product = p;
+      });
   }
 
   save(product){

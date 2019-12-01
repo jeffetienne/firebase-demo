@@ -1,5 +1,5 @@
 <div class="card">
-    <img [src]="product.imageUrl" class="card-img-top" alt="Card image cap" *ngIf="product.imageUrl" alt="{{ product.title }}">
+    <img [src]="product.imageUrl" class="card-img-top" *ngIf="product.imageUrl" alt="{{ product.title }}">
     <div class="card-body">
         <h5 class="card-title">{{ product.title }}</h5>
         <p class="card-text">{{ product.price | currency:'USD':true }}</p>
@@ -12,7 +12,9 @@
             Add to Cart
         </button>
         <ng-template #updateQuantity>
-            
+            <product-quantity [product]="product" [shopping-cart]="shoppingCart">
+
+            </product-quantity>
         </ng-template>      
     </div>
 </div>

@@ -1,26 +1,23 @@
-import { Product } from './../models/products';
-import { Items } from './../models/items';
-import { ShoppingCart } from './../models/shopping-cart';
 import { Component, OnInit } from '@angular/core';
+import { Items } from '../models/items';
 import { ShoppingCartService } from '../shopping-cart.service';
+import { ShoppingCart } from '../models/shopping-cart';
 
 @Component({
-  selector: 'app-shopping-cart',
-  templateUrl: './shopping-cart.component.html',
-  styleUrls: ['./shopping-cart.component.css']
+  selector: 'order-summary',
+  templateUrl: './order-summary.component.html',
+  styleUrls: ['./order-summary.component.css']
 })
-export class ShoppingCartComponent implements OnInit {
+export class OrderSummaryComponent implements OnInit {
 
   cart$;
   items: Items[];
   shoppingCartItemCount: number;
   productIds;
   totalPrice: number=0;
-  cartId: string;
   constructor(private shoppingCartService: ShoppingCartService) { }
 
   async ngOnInit() {
-    this.cartId = await this.shoppingCartService.getOrCreateCartId();
     this.cart$ = (await this.shoppingCartService.getCart()).valueChanges();
     this.cart$.subscribe((cart: ShoppingCart) => {
       this.shoppingCartItemCount = 0;
@@ -32,5 +29,4 @@ export class ShoppingCartComponent implements OnInit {
       }
     });
   }
-
 }

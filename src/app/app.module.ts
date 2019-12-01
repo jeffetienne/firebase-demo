@@ -33,6 +33,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ShoppingCartService } from './shopping-cart.service';
 import { ChatComponent } from './chat/chat.component';
 import { ProductQuantityComponent } from './product-quantity/product-quantity.component';
+import { ShippingComponent } from './shipping/shipping.component';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { ProductQuantityComponent } from './product-quantity/product-quantity.co
     CategoryDashComponent,
     ProductCardComponent,
     ChatComponent,
-    ProductQuantityComponent
+    ProductQuantityComponent,
+    ShippingComponent,
+    OrderSummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +90,7 @@ import { ProductQuantityComponent } from './product-quantity/product-quantity.co
         component: ShoppingCartComponent
       }, 
       { 
-        path: 'check-out', 
+        path: 'check-out/:id', 
         component: CheckOutComponent, 
         canActivate: [AuthGuardService] 
       }, 
