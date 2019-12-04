@@ -121,6 +121,11 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
         component: AdminOrdersComponent, 
         canActivate: [AuthGuardService, AdminAuthGuardService] 
       }, 
+      { 
+        path: 'my/orders', 
+        component: MyOrdersComponent, 
+        canActivate: [AuthGuardService] 
+      }, 
     ])
   ],
   providers: [

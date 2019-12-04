@@ -1,1 +1,31 @@
-<p>my-orders works!</p>
+<data-table
+    [items]="orders"
+    [itemCount]="ordersCount"
+    (reload)="reloadOrders($event)"
+>
+    <data-table-column
+        [property]="'name'"
+        [header]="'Name'"
+        [sortable]="'true'"
+        [resizable]="'true'"
+    >
+
+    </data-table-column>
+
+    <data-table-column
+        [property]="'dateCreated'"
+        [header]="'Date Created'"
+        [sortable]="'true'"
+        [resizable]="'true'"
+    >
+        
+    </data-table-column>
+
+    <data-table-column
+        [property]="'key'"
+    >
+        <ng-template #dataTableCell let-item="item">
+            <a [routerLink]="['/my/orders/', item.key]">Edit</a>
+        </ng-template>
+    </data-table-column>
+</data-table>

@@ -27,7 +27,7 @@ export class ShoppingCartComponent implements OnInit {
       if (!cart) return;
       this.productIds = Object.keys(cart.items);
       for(let productId in cart.items){
-        this.totalPrice += cart.items[productId].quantity * cart.items[productId].product.price;
+        this.totalPrice += cart.items[productId].quantity * cart.items[productId].price;
         this.shoppingCartItemCount += cart.items[productId].quantity;
       }
     });

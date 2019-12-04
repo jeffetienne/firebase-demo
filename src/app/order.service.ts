@@ -14,6 +14,14 @@ export class OrderService {
     return this.db.object('/orders/' + id);
   }
 
+  getOrders(){
+    return this.db.list('/orders');
+  }
+
+  getOrdersByUser(userId: string){
+    return this.db.list('/orders', ref => ref.orderByChild('userId').equalTo(userId));
+  }
+
   create(shipping, shoppingCart){
     this.db.list('/orders').push({
       shoppingCart: shoppingCart,
